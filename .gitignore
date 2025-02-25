@@ -1,0 +1,19 @@
+
+# pixi environments
+.pixi
+*.egg-info
+
+# Jupyter
+.ipynb_checkpoints/*
+notebook.ipynb
+
+# LaTex 
+*.aux
+*.bcf
+*.log
+*.out
+*.bbl
+*.run.xml
+
+# Outputs
+images/*

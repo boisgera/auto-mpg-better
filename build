@@ -1,0 +1,6 @@
+#!/bin/bash
+xelatex article.tex
+biber article
+xelatex article.tex
+xelatex article.tex
+rm -rf *.aux *.bbl *.bcf *.blg *.log *.aux *.out *.xml
