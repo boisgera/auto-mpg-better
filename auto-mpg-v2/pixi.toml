@@ -6,12 +6,11 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks.clean]
-cmd = """\
-    rm -rf article.pdf
-    rm -rf images/prediction.png images/error.png
-    rm -rf notebook.ipynb
-    rm -rf article.aux article.bbl article.bcf article.blg article.log article.out article.run.xml
-    """
+cmd = """
+rm -rf article.pdf;
+rm -rf images/*.png;
+rm -rf notebook.ipynb;
+"""
 
 [tasks.exec]
 cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
@@ -19,12 +18,13 @@ inputs = ["auto-mpg.csv", "notebook-src.ipynb"]
 outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 
 [tasks.build]
-cmd = """\
-    xelatex article.tex # bug, the execution stops here!!!
-    biber article
-    xelatex article.tex
-    xelatex article.tex
-    """
+cmd = """
+xelatex article.tex;
+biber article;
+xelatex article.tex;
+xelatex article.tex;
+rm -rf article.[!tp]*;
+"""
 inputs = ["article.tex", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
 depends-on = ["exec"]
