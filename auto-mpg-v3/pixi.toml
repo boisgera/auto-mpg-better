@@ -41,6 +41,9 @@ inputs = ["article.md", "references.bib", "images/prediction.png", "images/error
 outputs = ["article.pdf"]
 depends-on = ["exec"]
 
+[tasks.all]
+depends-on = ["build", "html"]
+
 [dependencies]
 python = ">=3.13.2,<3.14"
 jupyterlab = ">=4.3.5,<5"
