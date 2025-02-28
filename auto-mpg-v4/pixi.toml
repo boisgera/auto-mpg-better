@@ -10,7 +10,9 @@ cmd = """\
 rm -rf article.pdf article.html;
 rm -rf images/*.png;
 rm -rf notebook.ipynb;
-rm -rf datasets/*.csv;
+rm -rf datasets/*.parquet;
+rm -rf **/__pycache__;
+rm -rf .ipynb_checkpoints;
 """
 
 [tasks.fetch]
@@ -25,6 +27,9 @@ inputs = ["datasets/auto-mpg.parquet", "notebook-src.ipynb"]
 outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 depends-on = ["fetch"]
 
+[tasks.cog]
+cmd = "cog -r article.md"
+
 [tasks.build]
 cmd = """\
 pandoc 
@@ -37,7 +42,7 @@ article.md
 """
 inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec"]
+depends-on = ["exec", "cog"]
 
 [tasks.html]
 cmd = """\
@@ -50,7 +55,7 @@ article.md
 """
 inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec"]
+depends-on = ["exec", "cog"]
 
 [tasks.all]
 depends-on = ["build", "html"]
@@ -68,3 +73,6 @@ tectonic = ">=0.15.0,<0.16"
 fsspec = ">=2025.2.0,<2026"
 huggingface_hub = ">=0.29.1,<0.30"
 pyarrow = ">=19.0.1,<20"
+
+[pypi-dependencies]
+cogapp = ">=3.4.1, <4"
