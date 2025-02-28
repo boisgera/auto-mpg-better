@@ -13,6 +13,7 @@ rm -rf notebook.ipynb;
 rm -rf datasets/*.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
+rm -rf .pixi
 """
 
 [tasks.fetch]
@@ -28,7 +29,7 @@ outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 depends-on = ["fetch"]
 
 [tasks.cog]
-cmd = "cog -r article.md"
+cmd = "cog -P -r article.md"
 
 [tasks.build]
 cmd = """\

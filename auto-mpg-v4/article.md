@@ -6,7 +6,7 @@ author: S. Boisgérault
 # from datetime import datetime
 # today = datetime.today()
 # latex_date = today.strftime("%B %d, %Y")
-# cog.outl(f"date: {latex_date}")
+# print(f"date: {latex_date}")
 #]]]
 date: February 28, 2025
 #[[[end]]]
