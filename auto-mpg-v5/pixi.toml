@@ -10,6 +10,7 @@ cmd = """\
 rm -rf article.pdf article.html;
 rm -rf images/*.png;
 rm -rf notebook.ipynb;
+rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/*.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
@@ -18,14 +19,14 @@ rm -rf .pixi
 
 [tasks.fetch]
 cmd = "python fetch.py; python check.py"
-inputs = ["datasets/fetch.py", "datasets/blake3-checsum", "references.json"]
-outputs = ["datasets/auto-mpg.parquet"]
+inputs = ["datasets/fetch.py", "datasets/check.py", "references.json"]
+outputs = ["datasets/auto-mpg.csv", "datasets/auto-mpg.parquet"]
 cwd = "datasets"
 
 [tasks.exec]
 cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
 inputs = ["datasets/auto-mpg.parquet", "notebook-src.ipynb"]
-outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
+outputs = ["notebook.ipynb", "images/*.png"]
 depends-on = ["fetch"]
 
 [tasks.cog]
@@ -41,7 +42,7 @@ pandoc
 -o article.pdf 
 article.md
 """
-inputs = ["article.md", "references.json", "images/prediction.png", "images/error.png"]
+inputs = ["article.md", "references.json", "images/*.png"]
 outputs = ["article.pdf"]
 depends-on = ["exec", "cog"]
 
@@ -54,7 +55,7 @@ pandoc
 -o article.html 
 article.md
 """
-inputs = ["article.md", "references.json", "images/prediction.png", "images/error.png"]
+inputs = ["article.md", "references.json", "images/*.png"]
 outputs = ["article.pdf"]
 depends-on = ["exec", "cog"]
 
@@ -71,8 +72,6 @@ pandas = ">=2.2.3,<3"
 seaborn = ">=0.13.2,<0.14"
 pandoc = ">=3.6.3,<4"
 tectonic = ">=0.15.0,<0.16"
-fsspec = ">=2025.2.0,<2026"
-huggingface_hub = ">=0.29.1,<0.30"
 pyarrow = ">=19.0.1,<20"
 
 [pypi-dependencies]
