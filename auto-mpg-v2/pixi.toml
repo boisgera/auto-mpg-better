@@ -2,7 +2,7 @@
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
-platforms = ["linux-64", "win-64", "osx-arm64"]
+platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks.clean]
@@ -18,17 +18,13 @@ inputs = ["auto-mpg.csv", "notebook-src.ipynb"]
 outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 
 [tasks.build]
-cmd = """
-xelatex article.tex;
-biber article;
-xelatex article.tex;
-xelatex article.tex;
-rm -rf article.[!tp]*; 
-rm -rf *-blx.bib
-"""
+cmd = "tectonic article.tex"
 inputs = ["article.tex", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
 depends-on = ["exec"]
+
+[tasks.watch]
+cmd = "watchexec -e tex,bib,png,ipynb pixi run build"
 
 [dependencies]
 python = ">=3.13.2,<3.14"
@@ -37,3 +33,5 @@ matplotlib = ">=3.10.0,<4"
 numpy = ">=2.2.3,<3"
 pandas = ">=2.2.3,<3"
 seaborn = ">=0.13.2,<0.14"
+tectonic = ">=0.15.0,<0.16"
+watchexec = ">=2.2.0,<3"
