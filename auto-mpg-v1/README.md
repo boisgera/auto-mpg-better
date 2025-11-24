@@ -18,40 +18,60 @@ de reproduire les artefacts du projet
 (ici l'article en PDF et les résultats du notebook) 
 par nous-mêmes. 
 
-Par example, on peut supposer que pour générer le PDF il faudra 
-exécuter la commande `latex article.tex`. Mais celle-ci génère l'erreur
+Par exemple : 
 
-```
-! LaTeX Error: File `images/prediction.png' not found.
+  - 📖 **Génération du PDF**. Si l'on connait un peu LaTeX, on peut supposer
+    qu'il faut commencer par exécuter la commande `latex article.tex`. 
+    Mais celle-ci génère l'erreur
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...
+    ```
+    ! LaTeX Error: File `images/prediction.png' not found.
 
-l.40 ...s[width=\textwidth]{images/prediction.png}
-```
+    See the LaTeX manual or LaTeX Companion for explanation.
+    Type  H <return>  for immediate help.
+    ...
 
-De même en exécutant le notebook ouvert avec `jupyter lab notebook.ipynb`,
-j'obtiens
+    l.40 ...s[width=\textwidth]{images/prediction.png}
+    ```
 
-```
----------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 1
-----> 1 import matplotlib.pyplot as plt
-      2 import numpy as np
-      3 import pandas as pd
+    Est-ce qu'une image est manquante ?
 
-ModuleNotFoundError: No module named 'matplotlib'
-```
+  - 🖥️ **Exécution du notebook.** De même, on peut reconnaître que l'extension
+    du fichier `notebook.ipynb` caractérise un notebook Jupyter et donc 
+    l'ouvrir avec la commande `jupyter lab notebook.ipynb`. Cela marche bien,
+    mais à l'exécution on obtient :
 
-C'est donc que Python et JupyterLab ne suffisent pas pour exécuter le notebook ?
+    ```
+    ---------------------------------------------------------------------------
+    ModuleNotFoundError                       Traceback (most recent call last)
+    Cell In[1], line 1
+    ----> 1 import matplotlib.pyplot as plt
+          2 import numpy as np
+          3 import pandas as pd
 
-Est-ce qu'une image est manquante ? De façon plus générale :
+    ModuleNotFoundError: No module named 'matplotlib'
+    ```
 
-  - Est-ce que tous les fichiers sources nécessaires à la production des 
-    artefacts sont présents ? Y'a-t'il une séquence bien précise 
-    d'étapes à suivre pour produire tous les artefacts ?
+    C'est donc a priori que Python et JupyterLab ne suffisent pas pour exécuter 
+    le notebook ? Qu'il faut installer la bibliothèque `matplotlib` ? Mais
+    dans quelle version ? Et quelle autre bibliothèque manque ?
 
-  - Quelles sont les commandes à invoquer ? Quels logiciels nécessitent-elles ?
-    Sur quelles plate-formes peut-on les exécuter ?
+ De façon plus générale, le projet actuel ne répond pas à ces questions :
+
+  - 🏭 **Processus.** 
+  
+      - Est-ce que tous les fichiers sources nécessaires à la production des 
+        artefacts sont bien présents ? 
+        
+      - Y'a-t'il une séquence précise d'étapes à suivre pour produire tous les 
+        artefacts ?
+
+  - 🖥️ **Logiciels.** 
+  
+      - Quelles sont les commandes à invoquer à chaque étape ? 
+      
+      - Quels logiciels nécessitent-elles ?
+    
+      - Dans quelle version ? 
+      
+      - Sur quelles plate-formes peut-on les exécuter ?
