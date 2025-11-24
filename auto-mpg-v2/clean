@@ -1,4 +1,0 @@
-#!/bin/bash
-rm -rf article.pdf
-rm -rf images/*
-rm -rf notebook.ipynb

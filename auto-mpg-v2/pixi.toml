@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
@@ -23,7 +23,8 @@ xelatex article.tex;
 biber article;
 xelatex article.tex;
 xelatex article.tex;
-rm -rf article.[!tp]*;
+rm -rf article.[!tp]*; 
+rm -rf *-blx.bib
 """
 inputs = ["article.tex", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
@@ -32,7 +33,6 @@ depends-on = ["exec"]
 [dependencies]
 python = ">=3.13.2,<3.14"
 jupyterlab = ">=4.3.5,<5"
-marimo = ">=0.11.9,<0.12"
 matplotlib = ">=3.10.0,<4"
 numpy = ">=2.2.3,<3"
 pandas = ">=2.2.3,<3"
