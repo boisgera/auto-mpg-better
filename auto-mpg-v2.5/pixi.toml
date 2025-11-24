@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
@@ -29,7 +29,6 @@ cmd = "watchexec -e tex,bib,png,ipynb pixi run build"
 [dependencies]
 python = ">=3.13.2,<3.14"
 jupyterlab = ">=4.3.5,<5"
-marimo = ">=0.11.9,<0.12"
 matplotlib = ">=3.10.0,<4"
 numpy = ">=2.2.3,<3"
 pandas = ">=2.2.3,<3"
