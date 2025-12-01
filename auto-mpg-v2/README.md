@@ -5,7 +5,7 @@ A cette étape, nous allons :
 - [ ] **Sources.** Identifier (ou faire émerger) les fichers sources du projet,
   qui sont strictement nécessaires à la genération de l'ensemble du projet.
   Pour faciliter cette identification, nous allons exclure du projet tout
-  fichier qui peut être généré.
+  fichier qui peut être regénéré.
 
 - [ ] **Tâches.** Identifier toutes les tâches de production d'artefacts 
   numériques et leur dépendances les unes envers les autres.
@@ -29,7 +29,7 @@ Ses logiciels sont issus de l'infrastructure [conda-forge].
 
 > [!TIP]
 > Pour un projet qui n'aurait besoin que de logiciels Python, nous aurions
-> pu également considérer [uv] qui exploite [PyPi] au lieu de conda-forge,
+> pu également considérer [uv] qui exploite [PyPi] au lieu de [conda-forge],
 > par exemple avec [taskipy] pour l'exécution des tâches. Malheureusement,
 > nous avons besoin de LaTeX ...
 
@@ -70,8 +70,8 @@ platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
 ## Notebook Jupyter
 
 En étudiant le notebook, on peut déterminer de quelles bibliothèques Python
-(en plus de Python et de JupyterLab) il a besoin : `NumPy`, `Pandas`, 
-`Matplotlib` et `Seaborn`.
+(en plus de Python et de JupyterLab) il a besoin : NumPy, Pandas, 
+Matplotlib et Seaborn.
 
 Nous pouvons donc spécifier ces dépendances avec `pixi`:
 
@@ -110,12 +110,13 @@ L'examen plus précis du notebook nous permet de réaliser deux choses :
   - Le fichier `noteboook.ipynb` n'est pas ni à 100% un fichier source ni
     à 100% un produit du projet, car il a été enregistré avec les résultats 
     de son exécution. Cela peut être pratique, mais nous allons faire le
-    choix un peu radical de ne conserver une version "pure" `notebook-src.ipynb`, 
-    sans les résultats de l'exécution (cela se discute ...).
+    choix un peu radical de ne conserver qu'une version "pure" 
+    `notebook-src.ipynb`, 
+    sans les résultats de l'exécution (ce choix se discute ...).
 
   - Nous pouvons constater qu'en plus de permettre de visualiser des images,
-    le notebook stocke ces images sous forme de fichiers et que ces images sont
-    utilisées dans l'article !
+    le notebook stocke ces images sous forme de fichiers quand il est exécuté
+    et que ces images sont utilisées dans l'article !
 
 Nous allons donc automatiser l'exécution du notebook source, pour produire le
 notebook résultat, visualisable, ainsi que les images associées. Pour cela,
