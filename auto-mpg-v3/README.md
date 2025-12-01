@@ -67,4 +67,4 @@ Nous pouvons :
 [Pandoc]: https://pandoc.org/
 [README.md]: https://github.com/boisgera/auto-mpg-better/blob/main/auto-mpg-v3/README.md
 [article.tex]: https://github.com/boisgera/auto-mpg-better/blob/main/auto-mpg-v2/article.tex
-[article.md]: https://github.com/boisgera/auto-mpg-better/blob/main/auto-mpg-v3/article.tmd
+[article.md]: https://github.com/boisgera/auto-mpg-better/blob/main/auto-mpg-v3/article.md
