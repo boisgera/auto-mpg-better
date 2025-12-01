@@ -2,9 +2,10 @@
 
 Admettons :
 
-  - qu'on ne soit pas un gros fan de LaTeX comme langage source
-    ... tout en souhaitent bénéficier des documents de grande qualité
-    que son algorithme de mise en page produit !
+  - qu'on ne soit pas un gros fan de LaTeX comme langage source en raison
+    de sa complexité
+    ... mais qu'on souhaite tout de même bénéficier des documents de grande 
+    qualité que son algorithme de mise en page produit !
 
   - qu'on souhaiterait produire un article au format HTML en plus de la 
     version PDF.
@@ -56,7 +57,7 @@ Nous pouvons :
 
   - éventuellement, créer une tâche `all` dont la fonction est d'exécuter
     toutes les tâches (si nécessaire):
-     
+
     ```
     [tasks.all]
     depends-on = ["pdf", "html"]
