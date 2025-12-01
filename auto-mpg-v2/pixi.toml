@@ -12,19 +12,19 @@ rm -rf images/*.png;
 rm -rf notebook.ipynb;
 """
 
-[tasks.exec]
+[tasks.notebook]
 cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
 inputs = ["auto-mpg.csv", "notebook-src.ipynb"]
 outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 
-[tasks.build]
+[tasks.latex]
 cmd = "tectonic article.tex"
 inputs = ["article.tex", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec"]
+depends-on = ["notebook"]
 
 [tasks.watch]
-cmd = "watchexec -e tex,bib,png,ipynb pixi run build"
+cmd = "watchexec -e tex,bib,png,ipynb pixi run latex"
 
 [dependencies]
 python = ">=3.13.2,<3.14"
