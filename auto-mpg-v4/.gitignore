@@ -1,3 +1,15 @@
-article.pdf
+# Pixi
+.pixi
+
+# Jupyter Notebook
+.ipynb_checkpoints
 notebook.ipynb
+
+# Article
+article.pdf
+article.html
+
+# Images
 images/*.png
+
+

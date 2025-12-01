@@ -1,0 +1,38 @@
+[
+  {
+    "id": "auto_mpg_9",
+    "title": "Auto MPG",
+    "type": "dataset",
+    "author": [
+      {
+        "family": "Quilan",
+        "given": "John Ross"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1993
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2025,
+          3,
+          1
+        ]
+      ]
+    },
+    "archive": "UCI Machine Learning Repository",
+    "DOI": "10.24432/C5859H",
+    "URL": "https://archive.ics.uci.edu/static/public/9/data.csv",
+    "custom": {
+      "checksum": {
+        "value": "ca25194200142eb13650f02ec2d64980",
+        "type": "md5"
+      }
+    }
+  }
+]

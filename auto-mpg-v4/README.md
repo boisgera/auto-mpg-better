@@ -1,10 +1,9 @@
 # auto-mpg
 
-  - Format et sourcing input dataset
+Rework :
 
-  - Export modele (structure et format)
+  - change bibliography to CSL JSON ; add data URL (DOI exists, but no usable
+    automatically)
 
-  - Cog pour document dynamique ; ajout subst auto valeur dans article ici?
-    OUI.
+  - initial dataset, fetching, format, improvements
 
-  - Rejeter rework du dataset en même temps que la biblio à l'étape qui suit.
