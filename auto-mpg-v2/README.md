@@ -164,7 +164,7 @@ tectonic = ">=0.15.0,<0.16"
 et décrivons la tâche de compilation LaTeX.
 
 ```toml
-[tasks.build]
+[tasks.pdf]
 cmd = "tectonic article.tex"
 inputs = ["article.tex", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
@@ -177,4 +177,10 @@ A ce stade, la commande `pixi run build` va
 
   - exécuter le notebook si nécessaire,
 
-  - compiler l'article LaTeX.
+  - compiler l'article LaTeX en PDF.
+
+
+## Bonus
+
+Le fichier final `pixi.toml` inclut également une tâche `clean` qui supprime 
+tous les fichiers produits par les autre tâches.

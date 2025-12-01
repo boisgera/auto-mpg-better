@@ -12,12 +12,12 @@ cmd = """\
     rm -rf notebook.ipynb
     """
 
-[tasks.exec]
+[tasks.notebook]
 cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
 inputs = ["auto-mpg.csv", "notebook-src.ipynb"]
 outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
 
-[tasks.build]
+[tasks.pdf]
 cmd = """pandoc 
   --citeproc 
   --pdf-engine=tectonic 
@@ -27,7 +27,7 @@ cmd = """pandoc
 """
 inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec"]
+depends-on = ["notebook"]
 
 [tasks.html]
 cmd = """pandoc 
@@ -38,16 +38,15 @@ cmd = """pandoc
   article.md
 """
 inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
-outputs = ["article.pdf"]
-depends-on = ["exec"]
+outputs = ["article.html"]
+depends-on = ["notebook"]
 
 [tasks.all]
-depends-on = ["build", "html"]
+depends-on = ["pdf", "html"]
 
 [dependencies]
 python = ">=3.13.2,<3.14"
 jupyterlab = ">=4.3.5,<5"
-marimo = ">=0.11.9,<0.12"
 matplotlib = ">=3.10.0,<4"
 numpy = ">=2.2.3,<3"
 pandas = ">=2.2.3,<3"
