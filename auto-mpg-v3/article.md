@@ -1,7 +1,6 @@
 ---
 title: Prediction of Car Fuel Consumption
 author: S. Boisgérault
-date: \today
 abstract: |
   We produce a model that predicts a vehicle fuel consumption from its weight, 
   with a estimated standard deviation smaller than 2 liters per 100 km. 
