@@ -39,8 +39,6 @@ Ses logiciels sont issus de l'infrastructure [conda-forge].
 [PyPi]: https://pypi.org/
 [taskipy]: https://github.com/taskipy/taskipy
 
-## Initialisation de l'environnement pixi
-
 Dans notre dossier projet , la commande `pixi init` va créer un fichier
 patron de configuration `pixi.toml` que nous pourrons soit éditer manuellement,
 soit a travers l'exécution de commandes `pixi`.
@@ -136,7 +134,7 @@ Le notebook complet peut désormais être généré avec la commande :
 pixi run exec
 ```
 
-# Article
+## Compilation de l'article
 
 La même démarche peut désormais être utilisée pour la production de l'article
 en PDF. 
