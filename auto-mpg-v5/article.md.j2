@@ -16,7 +16,7 @@ Our model is:
 $$
 \mbox{fuel consumption} 
 =  
-14 \times \mbox{vehicle weight} +7
+{{ slope }} \times \mbox{vehicle weight} {% if intercept >= 0 %}+{% endif %}{{ intercept }}
 $$
 where the fuel consumption is measured in liters per 100 km and the vehicle 
 weight in kg.
