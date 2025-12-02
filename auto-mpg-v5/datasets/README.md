@@ -1,8 +1,16 @@
-# Auto-MPG v4
+# Auto-MPG dataset
 
+Execute the command
 
-  - bibliography : extend with data url & checksum and go to CSL-JSON
+  - `pixi run python fetch-dataset.py`
 
-  - dataset : fetch, check, clean up and save in Parquet format
+    to download the original dataset, check it, clean it and save it in the
+    Parquet format.
 
-  - notebook : use marimo (no more weird "source" stuff, simpler execution)
+  - `pixi run marimo run fetch-dataset.py`
+
+    to get all these steps explained.
+
+  - `pixi run marimo edit fetch-dataset.py`
+
+    to inspect or edit the implementation of this process.

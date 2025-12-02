@@ -1,8 +1,9 @@
 # auto-mpg
 
-  - Intégrer ici source dataset management/format/checksum + biblio.
+Rework :
 
-  - Ajouter clean-up?
+  - change bibliography to CSL JSON ; add data URL (DOI exists, but no usable
+    automatically)
 
-  - v6 avec une couche de CI pour tout automatiser et commit sur 
-    gh-pages?
+  - initial dataset, fetching, format, improvements
+

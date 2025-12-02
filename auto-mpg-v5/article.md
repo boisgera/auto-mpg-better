@@ -1,15 +1,6 @@
 ---
 title: Prediction of Car Fuel Consumption
 author: S. Boisgérault
-#[[[cog
-# import cog
-# from datetime import datetime
-# today = datetime.today()
-# latex_date = today.strftime("%B %d, %Y")
-# print(f"date: {latex_date}")
-#]]]
-date: March 09, 2025
-#[[[end]]]
 abstract: |
   We produce a model that predicts a vehicle fuel consumption from its weight, 
   with a estimated standard deviation smaller than 2 liters per 100 km. 

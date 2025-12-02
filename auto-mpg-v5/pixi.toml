@@ -14,12 +14,11 @@ rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/auto-mpg.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
-rm -rf .pixi
 """
 
 [tasks.fetch]
 cmd = "python fetch-dataset.py"
-inputs = ["datasets/fetch.py", "references.json"]
+inputs = ["datasets/fetch.py", "bibliography/references.json"]
 outputs = ["datasets/auto-mpg.csv", "datasets/auto-mpg.parquet"]
 cwd = "datasets"
 
@@ -29,17 +28,23 @@ inputs = ["datasets/auto-mpg.parquet", "notebook.py"]
 outputs = ["images/error.png", "images/prediction.png"]
 depends-on = ["fetch"]
 
+[tasks.bibliography]
+cmd = "pandoc references.json -f csljson -t bibtex -o references.bib"
+inputs = ["bibliography/references.json"]
+outputs = ["bibliography/references.bib"]
+cwd = "bibliography"
+
 [tasks.pdf]
 cmd = """\
 pandoc 
 --citeproc 
 --metadata link-citations=true
---bibliography=references.json
+--bibliography=bibliography/references.json
 --pdf-engine=tectonic 
 -o article.pdf 
 article.md
 """
-inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
+inputs = ["article.md", "bibliography/references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
 depends-on = ["notebook"]
 
@@ -48,11 +53,11 @@ cmd = """\
 pandoc 
 --standalone 
 --citeproc 
---bibliography=references.json
+--bibliography=bibliography/references.json
 -o article.html 
 article.md
 """
-inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
+inputs = ["article.md", "bibliography/references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
 depends-on = ["notebook"]
 

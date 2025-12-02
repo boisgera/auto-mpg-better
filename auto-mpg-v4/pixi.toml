@@ -14,7 +14,6 @@ rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/auto-mpg.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
-rm -rf .pixi
 """
 
 [tasks.fetch]
