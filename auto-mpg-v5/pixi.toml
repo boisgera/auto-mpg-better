@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
@@ -11,28 +11,25 @@ rm -rf article.pdf article.html;
 rm -rf images/*.png;
 rm -rf notebook.ipynb;
 rm -rf datasets/auto-mpg.csv;
-rm -rf datasets/*.parquet;
+rm -rf datasets/auto-mpg.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
 rm -rf .pixi
 """
 
 [tasks.fetch]
-cmd = "python fetch.py; python check.py"
-inputs = ["datasets/fetch.py", "datasets/check.py", "references.json"]
+cmd = "python fetch-dataset.py"
+inputs = ["datasets/fetch.py", "references.json"]
 outputs = ["datasets/auto-mpg.csv", "datasets/auto-mpg.parquet"]
 cwd = "datasets"
 
-[tasks.exec]
-cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
-inputs = ["datasets/auto-mpg.parquet", "notebook-src.ipynb"]
-outputs = ["notebook.ipynb", "images/*.png"]
+[tasks.notebook]
+cmd = "python notebook.py"
+inputs = ["datasets/auto-mpg.parquet", "notebook.py"]
+outputs = ["images/error.png", "images/prediction.png"]
 depends-on = ["fetch"]
 
-[tasks.cog]
-cmd = "cog -P -r article.md"
-
-[tasks.build]
+[tasks.pdf]
 cmd = """\
 pandoc 
 --citeproc 
@@ -42,9 +39,9 @@ pandoc
 -o article.pdf 
 article.md
 """
-inputs = ["article.md", "references.json", "images/*.png"]
+inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec", "cog"]
+depends-on = ["notebook"]
 
 [tasks.html]
 cmd = """\
@@ -55,12 +52,12 @@ pandoc
 -o article.html 
 article.md
 """
-inputs = ["article.md", "references.json", "images/*.png"]
+inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec", "cog"]
+depends-on = ["notebook"]
 
 [tasks.all]
-depends-on = ["build", "html"]
+depends-on = ["pdf", "html"]
 
 [dependencies]
 python = ">=3.13.2,<3.14"
@@ -74,5 +71,3 @@ pandoc = ">=3.6.3,<4"
 tectonic = ">=0.15.0,<0.16"
 pyarrow = ">=19.0.1,<20"
 
-[pypi-dependencies]
-cogapp = ">=3.4.1, <4"

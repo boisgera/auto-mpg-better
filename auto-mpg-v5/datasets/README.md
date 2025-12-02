@@ -1,4 +1,8 @@
-- document the DOI fiasco?
-- clean-up the column types?
-- get a checksum of the csv file?
-- export something less shitty than csv? Parquet?
+# Auto-MPG v4
+
+
+  - bibliography : extend with data url & checksum and go to CSL-JSON
+
+  - dataset : fetch, check, clean up and save in Parquet format
+
+  - notebook : use marimo (no more weird "source" stuff, simpler execution)

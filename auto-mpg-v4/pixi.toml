@@ -1,4 +1,4 @@
-[workspace]
+[project]
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
@@ -10,50 +10,51 @@ cmd = """\
 rm -rf article.pdf article.html;
 rm -rf images/*.png;
 rm -rf notebook.ipynb;
-rm -rf datasets/*.parquet;
+rm -rf datasets/auto-mpg.csv;
+rm -rf datasets/auto-mpg.parquet;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
+rm -rf .pixi
 """
 
-[tasks.datasets]
-cmd = "python fetch.py; python check.py; python clean.py"
-inputs = ["datasets/fetch.py", "datasets/check.py", "datasets/clean.py"]
+[tasks.fetch]
+cmd = "python fetch-dataset.py"
+inputs = ["datasets/fetch.py", "references.json"]
 outputs = ["datasets/auto-mpg.csv", "datasets/auto-mpg.parquet"]
 cwd = "datasets"
 
 [tasks.notebook]
-cmd = "jupyter execute --output=notebook.ipynb notebook-src.ipynb"
-inputs = ["datasets/auto-mpg.parquet", "notebook-src.ipynb"]
-outputs = ["notebook.ipynb", "images/prediction.png", "images/error.png"]
-depends-on = ["datasets"]
-
+cmd = "python notebook.py"
+inputs = ["datasets/auto-mpg.parquet", "notebook.py"]
+outputs = ["images/error.png", "images/prediction.png"]
+depends-on = ["fetch"]
 
 [tasks.pdf]
 cmd = """\
 pandoc 
 --citeproc 
 --metadata link-citations=true
---bibliography=references.bib 
+--bibliography=references.json
 --pdf-engine=tectonic 
 -o article.pdf 
 article.md
 """
-inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
+inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
-depends-on = ["exec", "cog"]
+depends-on = ["notebook"]
 
 [tasks.html]
 cmd = """\
 pandoc 
 --standalone 
 --citeproc 
---bibliography=references.bib 
+--bibliography=references.json
 -o article.html 
 article.md
 """
-inputs = ["article.md", "references.bib", "images/prediction.png", "images/error.png"]
+inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
-depends-on = ["notebook", "cog"]
+depends-on = ["notebook"]
 
 [tasks.all]
 depends-on = ["pdf", "html"]
@@ -61,7 +62,7 @@ depends-on = ["pdf", "html"]
 [dependencies]
 python = ">=3.13.2,<3.14"
 jupyterlab = ">=4.3.5,<5"
-marimo = ">=0.18.0,<0.19"
+marimo = ">=0.11.9,<0.12"
 matplotlib = ">=3.10.0,<4"
 numpy = ">=2.2.3,<3"
 pandas = ">=2.2.3,<3"
@@ -69,5 +70,4 @@ seaborn = ">=0.13.2,<0.14"
 pandoc = ">=3.6.3,<4"
 tectonic = ">=0.15.0,<0.16"
 pyarrow = ">=19.0.1,<20"
-requests = ">=2.32.5,<3"
 

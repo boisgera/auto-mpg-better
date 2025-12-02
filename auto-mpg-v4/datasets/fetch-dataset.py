@@ -22,20 +22,6 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    /// tip | Learning Objectives
-    - [ ] Fetch the data set (use API and CSV to learn both ways),
-    - [ ] Explore the metadata, interpret the info,
-    - [ ] Make a dataframe from the data,
-    - [ ] Make a seaborn pairplot with the suitable hue,
-    - [ ] Clean-up: manage NaNs, fix errors, fix data types, get the brands, etc.
-    - [ ] Save your result in a suitable format.
-    """)
-    return
-
-
 @app.cell
 def _():
     # Python Standard Library
@@ -59,7 +45,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Fetch the Dataset
+    ## Fetch the original dataset
     """)
     return
 
@@ -140,10 +126,10 @@ def _(DATA_URL, pathlib, requests):
 
 
 @app.cell(hide_code=True)
-def _(MD5_SUM, hashlib, mo):
+def _(MD5_SUM, hashlib):
     with open("auto-mpg.csv", "rb") as _file:
         checksum = hashlib.md5(_file.read()).hexdigest()
-    mo.md(f"Checksum: {'✅' if checksum == MD5_SUM else '❌'}")
+    print(f"Checksum: {'✅' if checksum == MD5_SUM else '❌'}")
     return
 
 
@@ -157,7 +143,7 @@ def _(mo):
 
 @app.cell
 def _(pd):
-    df = pd.read_csv("tmp/auto_mpg.csv")
+    df = pd.read_csv("auto-mpg.csv")
     df
     return (df,)
 
@@ -165,14 +151,16 @@ def _(pd):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Data Cleanup
+    ## NA Values
+
+    There are a few not-available values in the data. We remove the corresponding 4 rows.
     """)
     return
 
 
 @app.cell
-def _(df):
-    df.isna().any()
+def _(df, mo):
+    mo.show_code(df.isna().any())
     return
 
 
@@ -183,7 +171,25 @@ def _(df):
     return (df_1,)
 
 
-@app.cell
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Brands and models
+
+    The brand (company) name and model name are mixed into the `car_name` field. We split it into proper `brand` and `model` fields. There are also quite a few inconsistencies and typos in the automobile brands that we try to fix issues.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+ 
+    """)
+    return
+
+
+@app.cell(hide_code=True)
 def _(df_1):
     df_2 = df_1.copy()
     car_names = df_1["car_name"]
@@ -214,7 +220,7 @@ def _(df_1):
     df_2["brand"] = df_2["brand"].apply(tweak_brand)
     df_2 = df_2.sort_values(by="brand", ignore_index=True)
 
-    df_2["brand"].unique()
+    list(df_2["brand"].unique())
     return (df_2,)
 
 
@@ -224,9 +230,27 @@ def _(df_2):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Origin
+
+    The `origin` field is a number encoding the origin of the car.
+    """)
+    return
+
+
 @app.cell
-def _(df_2):
-    df_2["origin"].unique()
+def _(df_2, mo):
+    mo.show_code(df_2["origin"].unique())
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    A study of the data shows that `1` stands for USA, `2` for Europe and `3` for Asia.
+    """)
     return
 
 
@@ -236,31 +260,42 @@ def _(df_2):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    We replace the number with the appropriate name.
+    """)
+    return
+
+
 @app.cell
 def _(df_2):
     df_3 = df_2.copy()
     def convert_origin(number):
         return {1: "USA", 2: "Europe", 3: "Asia"}.get(number)
     df_3["origin"] = df_3["origin"].apply(convert_origin)
-    df_3
     return (df_3,)
 
 
-@app.cell
-def _(df_3, sns):
-    sns.pairplot(df_3[["model_year", "weight", "origin", "mpg"]], hue='origin')
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Data types
+
+    If we look at the current data types, we see that the weight is encoded as an integer when similar values are encoded as floating-point numbers. Also, the origin is now a string (`object`) when it's actually some categorical data (a label between a fixed number of options).
+    """)
     return
 
 
 @app.cell
 def _(df_3):
-    df_3
+    df_3.dtypes
     return
 
 
 @app.cell
 def _(df_3):
-    # ⚠️ These changes will be lost if df_4 is exported as csv ... but not parquet! 🥳
+    # ⚠️ These changes would be lost if df_4 was exported as csv ... but not parquet! 🥳
     df_4 = df_3.copy()
     df_4["origin"] = df_3["origin"].astype("category")
     df_4["weight"] = df_4["weight"].astype(float)
@@ -269,26 +304,52 @@ def _(df_3):
 
 
 @app.cell
-def _():
-    #df_4.to_csv("data/auto_mpg.csv", index=False)
-    return
-
-
-@app.cell(hide_code=True)
-def _():
-    #pd.read_csv("data/auto_mpg.csv")
+def _(mo):
+    mo.md(r"""
+    We fix both issues.
+    """)
     return
 
 
 @app.cell
 def _(df_4):
-    df_4.to_parquet("auto-mpg.parquet")
+    df_4.dtypes
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Cleaned-up dataset
+    """)
     return
 
 
 @app.cell
-def _(pd):
-    pd.read_parquet("auto-mpg.parquet")
+def _(df_4):
+    df_4
+    return
+
+
+@app.cell
+def _(df_4, sns):
+    sns.pairplot(df_4[["model_year", "weight", "origin", "mpg"]], hue='origin')
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    We could save the resulting dataset as a csv file, but we would lose some information, since this format does not store the information about data types. Instead, we use the [Apache Parquet] format, which fixes this problem and has other advantages.
+
+    [Apache Parquet]: https://en.wikipedia.org/wiki/Apache_Parquet
+    """)
+    return
+
+
+@app.cell
+def _(df_4, mo):
+    mo.show_code(df_4.to_parquet("auto-mpg.parquet"))
     return
 
 
