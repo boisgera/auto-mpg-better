@@ -16,9 +16,11 @@ def _():
     import numpy as np
     import onnx; from onnx import helper, TensorProto
     import onnxruntime as ort
+    from tinygrad import Tensor
+    import tinygrad.frontend.onnx as onnx_
     import pandas as pd
     import seaborn as sns
-    return TensorProto, helper, np, onnx, ort, pd, plt, sns
+    return Tensor, TensorProto, helper, np, onnx, onnx_, ort, pd, plt, sns
 
 
 @app.cell
@@ -130,34 +132,34 @@ def _(plt, pred_error, sns):
 
 @app.cell
 def _(TensorProto, helper, intercept, np, onnx, slope):
-    MODEL_PATH = "models/lp100.onnx"
+    ONNX_PATH = "models/lp100.onnx"
 
-    def create_onnx_model(model_path=MODEL_PATH):
-        slope_array = np.array([[slope]], dtype=np.float32)
-        intercept_array = np.array([intercept], dtype=np.float32)
+    def create_onnx_model(onnx_path=ONNX_PATH):
+        slope_array = np.array([[slope]], dtype=np.float64)
+        intercept_array = np.array([intercept], dtype=np.float64)
 
         weight_kg = helper.make_tensor_value_info(
             "weight_kg",
-            TensorProto.FLOAT,
+            TensorProto.DOUBLE,
             [None, 1],
         )
 
         lp100 = helper.make_tensor_value_info(
             "lp100",
-            TensorProto.FLOAT,
+            TensorProto.DOUBLE,
             [None, 1],
         )
 
         slope_initializer = helper.make_tensor(
             name="slope",
-            data_type=TensorProto.FLOAT,
+            data_type=TensorProto.DOUBLE,
             dims=slope_array.shape,
             vals=slope_array.flatten().tolist(),
         )
 
         intercept_initializer = helper.make_tensor(
             name="intercept",
-            data_type=TensorProto.FLOAT,
+            data_type=TensorProto.DOUBLE,
             dims=intercept_array.shape,
             vals=intercept_array.flatten().tolist(),
         )
@@ -186,64 +188,38 @@ def _(TensorProto, helper, intercept, np, onnx, slope):
         model.ir_version = 9
         model.opset_import[0].version = 14
         onnx.checker.check_model(model)
-        onnx.save(model, model_path)
-        print(f"Model saved to {model_path}")
+        onnx.save(model, onnx_path)
+        print(f"Model saved to {onnx_path}")
 
         return model
 
 
     create_onnx_model()
-    return MODEL_PATH, create_onnx_model
+    return ONNX_PATH, create_onnx_model
 
 
 @app.cell
-def _(MODEL_PATH, np, ort):
+def _(ONNX_PATH, np, ort):
+    class ONNX_LP100:
+        def __init__(self):
+            self.session = ort.InferenceSession(ONNX_PATH)
+        def __call__(self, weight_kg):
+            shape = np.shape(weight_kg)
+            weight_kg = np.reshape(weight_kg, (-1, 1))
+            lp100 = self.session.run(["lp100"], {"weight_kg": weight_kg})
+            lp100 = np.reshape(lp100, shape)
+            return lp100
+    onnx_lp100 = ONNX_LP100()
+    return ONNX_LP100, onnx_lp100
 
-    def run_siso_model(session, input_value):
-        """
-        Run a SISO ONNX model with a single input value
-    
-        Args:
-            onnx_path: Path to the ONNX file
-            input_value: Single float input value
-            use_gpu: Whether to use GPU (CUDA) if available
-    
-        Returns:
-            Model output as a float
-        """
-        # Create session options
 
-        # Get input and output names
-        input_name = session.get_inputs()[0].name
-        output_name = session.get_outputs()[0].name
-    
-        # Prepare input data
-        # Convert scalar to 2D array: [batch_size, input_dimension]
-        # For SISO: shape should be [1, 1] for single sample
-        input_data = np.array([[input_value]], dtype=np.float32)
-    
-        # Run inference
-        outputs = session.run([output_name], {input_name: input_data})
-    
-        # Extract output (assuming single output)
-        output_value = outputs[0][0][0]  # Get scalar from [1, 1] array
-    
-        return output_value
-
-    options = ort.SessionOptions()
-    # Load the ONNX model
-    session = ort.InferenceSession(MODEL_PATH, options)
-
-    # Single input value
-    input_value = 1000
-
-    # Run inference
-    try:
-        output = run_siso_model(session, input_value)
-        print(f"Input: {input_value}, Output: {output}")
-    except Exception as e:
-        print(f"Error: {e}")
-    return input_value, options, output, run_siso_model, session
+@app.cell
+def _(np, onnx_lp100, plt):
+    weights_kg = np.arange(500.0, 2500.0, 250.0)
+    plt.plot(weights_kg, onnx_lp100(weights_kg), "--o", color="C0")
+    plt.grid(True)
+    plt.gcf()
+    return (weights_kg,)
 
 
 if __name__ == "__main__":
