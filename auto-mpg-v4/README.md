@@ -63,7 +63,7 @@ données et l'ajouter dans les attributs personnalisés de notre bibliographie.
 
 ## Gestion des données
 
-Cf. [datasets/README.md]
+Cf. [./datasets/README.md]
 
 
 
