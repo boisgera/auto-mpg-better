@@ -100,6 +100,9 @@ Jusqu'à la version 4 du projet :
 
     onnx_lp100(weight_kg=1000.0) # output: 8.096325561244473
     ```
+
+    ... mais cela devrait n'être qu'une formalité pour un chercheur ou ingénieur
+    du domaine !
    
 ## Et si ?
 
