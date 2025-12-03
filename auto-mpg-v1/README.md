@@ -1,4 +1,4 @@
-# auto-mpg
+# auto-mpg v1 - Projet original
 
 Que penser du projet initial ?
 

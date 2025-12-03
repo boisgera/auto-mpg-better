@@ -1,17 +1,18 @@
-# auto-mpg v2
+# auto-mpg v2 – Fichier sources et artefacts
 
 A cette étape, nous allons :
 
-- [ ] **Sources.** Identifier (ou faire émerger) les fichers sources du projet,
+- Identifier (ou faire émerger) les fichers sources du projet,
   qui sont strictement nécessaires à la genération de l'ensemble du projet.
   Pour faciliter cette identification, nous allons exclure du projet tout
   fichier qui peut être regénéré.
 
-- [ ] **Tâches.** Identifier toutes les tâches de production d'artefacts 
+- Identifier toutes les tâches de production d'artefacts 
   numériques et leur dépendances les unes envers les autres.
 
-- [ ] **Environnement.** Identifier les logiciels nécessaires à la bonne 
-  exécution de chaque tâche et produire un environnement automatisant leur installation ainsi que l'exécution des tâches.
+- Identifier les logiciels nécessaires à la bonne 
+  exécution de chaque tâche et produire un environnement automatisant 
+  leur installation ainsi que l'exécution des tâches.
 
 ## Création d'un projet pixi
 
