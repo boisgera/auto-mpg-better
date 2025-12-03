@@ -108,8 +108,14 @@ Jusqu'à la version 4 du projet :
 
 Dans notre solution, les utilisateurs refont tourner l'algorithme 
 d'apprentissage sur leur machine et produisent leur propre version
-du modèle. Et si cette phase était très longue, demandait
-des machines puissantes et produisant un très gros modèle ?
+du modèle. Et si 
+
+  - cette phase d'apprentissage était très longue ?
+  
+  - demandait des machines puissantes (mémoire, CPU, etc.) ?
+  
+  - produisant un très gros modèle ?
+
 Comment simplifieriez-vous la vie à vos potentiels utilisateurs ?
 
 
