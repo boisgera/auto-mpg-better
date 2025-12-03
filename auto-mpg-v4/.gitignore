@@ -5,6 +5,9 @@
 .ipynb_checkpoints
 notebook.ipynb
 
+# Python
+**/__pycache__
+
 # Article
 article.pdf
 article.html
