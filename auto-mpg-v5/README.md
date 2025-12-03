@@ -1,4 +1,4 @@
-# auto-mpg v5 –⁠ Résultats
+# auto-mpg v5 –⁠ Résultats : modèle et performance
 
 Jusqu'à la version 4 du projet :
 
