@@ -4,10 +4,10 @@ Nous présentons un microscopique projet de recherche en "machine learning"
 qui produit un prédicteur de la consommation d'un véhicule en fonction 
 de son poids.
 
-Ce projet n'est qu'un prétexte ! Peut importe ici le modèle simpliste utilisé
+Ce projet n'est qu'un prétexte ! Peu importe ici le modèle simpliste utilisé
 ou les méthodes mise en oeuvres qui sont très loin de l'état de l'art.
 Nous allons nous intéresser au contraire à la gestion de tous les aspects 
-"secondaires" du projet qui sont de nature à maximiser son utilité.
+"secondaires" du gestion du projet qui sont de nature à maximiser son utilité.
 
 Nous considérerons les étapes suivantes :
 
