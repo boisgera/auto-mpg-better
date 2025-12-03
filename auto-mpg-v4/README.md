@@ -1,7 +1,7 @@
 # auto-mpg v4 –⁠ Jeux de données
 
 Le projet initial contenait un fichier de bibliographie `references.bib`
-au format BibTeX:
+au format BibTeX
 
 ```bibtex
 @misc{auto_mpg_9,
@@ -61,7 +61,9 @@ données et l'ajouter dans les attributs personnalisés de notre bibliographie.
 ]
 ```
 
-### Rapatriement des données
+## Gestion des données
+
+Cf. [datasets/README.md]
 
 
 
