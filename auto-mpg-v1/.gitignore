@@ -1,2 +1,7 @@
 # Jupyter Notebooks
 .ipynb_checkpoints
+
+# LaTeX
+*.out
+*.aux
+*.log
