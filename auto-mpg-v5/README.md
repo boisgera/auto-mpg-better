@@ -46,12 +46,12 @@ Jusqu'à la version 4 du projet :
     Le format JSON est à la fois lisible et très facile à exploiter de façon
     programmatique dans la plupart des contextes.
 
-  - Nous remplaçons `article.md` par un fichier patron `article.md.j2` ou
+  - Nous remplaçons `article.md` par un fichier patron `article.md.j2` où
     certaines des valeurs, au lieu d'être écrites une fois pour toutes,
     sont des variables, repérables par les "moustaches" `{{ }}`. Par exemple
     dans le fragment
 
-    ``md
+    ```markdown
     The numerical values of the model parameters are
 
     - slope: ${{ slope }}$
