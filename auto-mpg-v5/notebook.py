@@ -6,6 +6,12 @@ app = marimo.App()
 
 @app.cell
 def _():
+    import marimo as mo
+    return (mo,)
+
+
+@app.cell
+def _():
     import json
     return (json,)
 
@@ -16,11 +22,9 @@ def _():
     import numpy as np
     import onnx; from onnx import helper, TensorProto
     import onnxruntime as ort
-    from tinygrad import Tensor
-    import tinygrad.frontend.onnx as onnx_
     import pandas as pd
     import seaborn as sns
-    return Tensor, TensorProto, helper, np, onnx, onnx_, ort, pd, plt, sns
+    return TensorProto, helper, np, onnx, ort, pd, plt, sns
 
 
 @app.cell
@@ -89,11 +93,11 @@ def _(coeffs):
 
 
 @app.cell
-def _(intercept, np, slope):
+def _(intercept, slope):
     def lp100_pred(weight_kg):
         return intercept + slope * weight_kg
 
-    lp100_pred(np.float32(1000.0))
+    lp100_pred(1000.0)
     return (lp100_pred,)
 
 
@@ -117,8 +121,9 @@ def _(dfr, lp100_pred):
 
 @app.cell
 def _(pred_error):
-    pred_error.describe()
-    return
+    stats = pred_error.describe()
+    stats
+    return (stats,)
 
 
 @app.cell
@@ -128,6 +133,49 @@ def _(plt, pred_error, sns):
     plt.savefig("images/error.png")
     plt.gca()
     return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+        ## Artifacts
+
+        We save the results of the learning process in two structures:
+
+          - a result file that contains the model weights and
+            expected performance,
+
+          - a model file that can be
+            executed by many compatible runtime environments.
+        """
+    )
+    return
+
+
+@app.cell
+def _(intercept, slope, stats):
+    results = {
+        "model" : {
+            "weight": slope,
+            "bias": intercept,
+        },
+        "error" : {
+            "mean": stats["mean"],
+            "std": stats["std"],
+        }
+    }
+    results
+    return (results,)
+
+
+@app.cell
+def _(json, results):
+    JSON_PATH = "models/results.json"
+
+    with open(JSON_PATH, mode="wt", encoding="utf-8") as json_file:
+        json.dump(results, json_file)
+    return JSON_PATH, json_file
 
 
 @app.cell
@@ -185,40 +233,86 @@ def _(TensorProto, helper, intercept, np, onnx, slope):
         )
 
         model = helper.make_model(graph)
+        # Conservative version values to improve runtime compatibility
         model.ir_version = 9
         model.opset_import[0].version = 14
         onnx.checker.check_model(model)
         onnx.save(model, onnx_path)
-        print(f"Model saved to {onnx_path}")
+        print(f"ONNX model saved to {onnx_path}")
 
         return model
 
 
-    create_onnx_model()
-    return ONNX_PATH, create_onnx_model
+    onnx_model = create_onnx_model()
+    return ONNX_PATH, create_onnx_model, onnx_model
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        Let's demonstrate how to use this saved OONNX model with the ONNX runtime.
+
+        First we create a callable model instance `onnx_lp100`:
+        """
+    )
+    return
 
 
 @app.cell
-def _(ONNX_PATH, np, ort):
+def _(ONNX_PATH, mo, np, onnx_model, ort):
+    onnx_model
+
     class ONNX_LP100:
         def __init__(self):
             self.session = ort.InferenceSession(ONNX_PATH)
         def __call__(self, weight_kg):
-            shape = np.shape(weight_kg)
+            input_shape = np.shape(weight_kg)
+            input_is_scalar = np.isscalar(weight_kg)
             weight_kg = np.reshape(weight_kg, (-1, 1))
             lp100 = self.session.run(["lp100"], {"weight_kg": weight_kg})
-            lp100 = np.reshape(lp100, shape)
+            lp100 = np.reshape(lp100, input_shape)
+            if input_is_scalar:
+                lp100 = lp100.item()
             return lp100
-    onnx_lp100 = ONNX_LP100()
+
+    onnx_lp100 = ONNX_LP100()        
+    mo.show_code()
     return ONNX_LP100, onnx_lp100
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Then we call this model, either with scalar of vector input data:""")
+    return
+
+
 @app.cell
-def _(np, onnx_lp100, plt):
-    weights_kg = np.arange(500.0, 2500.0, 250.0)
-    plt.plot(weights_kg, onnx_lp100(weights_kg), "--o", color="C0")
+def _(mo, onnx_lp100):
+    mo.show_code(onnx_lp100(weight_kg=1000.0))
+    return
+
+
+@app.cell
+def _(dfr, mo, np, onnx_lp100, plt, sns):
+    sns.scatterplot(
+        x=dfr.weight_kg,
+        y=dfr.lp100,
+        color="C0",
+        alpha=0.25,
+        label="data",
+    )
+    weights_kg = np.arange(500.0, 2500.0 + 0.1, 250.0)
+    plt.plot(
+        weights_kg, onnx_lp100(weights_kg), "--", color="C0", label="prediction"
+    )
+    plt.xlabel(
+        "weight_kg",
+    )
+    plt.ylabel("lp100")
     plt.grid(True)
-    plt.gcf()
+    plt.legend()
+    mo.show_code(plt.gcf())
     return (weights_kg,)
 
 

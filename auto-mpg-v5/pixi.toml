@@ -7,11 +7,13 @@ version = "0.1.0"
 
 [tasks.clean]
 cmd = """\
-rm -rf article.pdf article.html;
+rm -rf article.md article.pdf article.html;
 rm -rf images/*.png;
 rm -rf notebook.ipynb;
 rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/auto-mpg.parquet;
+rm -rf models/results.json;
+rm -rf models/lp100.onnx;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
 """
@@ -34,6 +36,13 @@ inputs = ["bibliography/references.json"]
 outputs = ["bibliography/references.bib"]
 cwd = "bibliography"
 
+[tasks.article]
+cmd = "python make_article_md.py"
+inputs = ["models/results.json", "article.md.j2"]
+outputs = ["article.md"]
+depends-on = ["notebook"]
+cwd = "scripts"
+
 [tasks.pdf]
 cmd = """\
 pandoc 
@@ -46,7 +55,7 @@ article.md
 """
 inputs = ["article.md", "bibliography/references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
-depends-on = ["notebook"]
+depends-on = ["article"]
 
 [tasks.html]
 cmd = """\
@@ -58,8 +67,8 @@ pandoc
 article.md
 """
 inputs = ["article.md", "bibliography/references.json", "images/error.png", "images/prediction.png"]
-outputs = ["article.pdf"]
-depends-on = ["notebook"]
+outputs = ["article.html"]
+depends-on = ["article"]
 
 [tasks.all]
 depends-on = ["pdf", "html"]

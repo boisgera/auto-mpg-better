@@ -8,18 +8,26 @@ abstract: |
 ---
 
 # Introduction
+
 **TODO**
 
 # Model
 
-Our model is:
+The structure of our model is
 $$
 \mbox{fuel consumption} 
 =  
-{{ slope }} \times \mbox{vehicle weight} {% if intercept >= 0 %}+{% endif %}{{ intercept }}
+\mbox{slope} \times \mbox{vehicle weight} + \mbox{intercept}
 $$
-where the fuel consumption is measured in liters per 100 km and the vehicle 
-weight in kg.
+where 
+
+  - the fuel consumption is measured in liters per 100 km and 
+  - the vehicle weight is given in kg.
+
+The numerical values of the model parameters are
+
+  - slope: ${{ slope }}$
+  - intercept: ${{ intercept }}$
 
 ![Fuel consumption vs weight in the auto-mpg data sets (semi-transparent dots) 
 and the corresponding prediction model (line).](images/prediction.png)
@@ -30,11 +38,11 @@ and the corresponding prediction model (line).](images/prediction.png)
 
 Our model is practically unbiased 
 $$
-|\mbox{mean}| \leq 10^{-14}
+|\mbox{mean}| = {{ mean }} \leq {{ max_mean }}.
 $$
 and its standard deviation is
 $$
-\mbox{std} \approx 1.815 < 2.0.
+\mbox{std} = {{ std }} \leq {{ max_std }}.
 $$
 
 ![The consumption prediction error distribution.](images/error.png)
