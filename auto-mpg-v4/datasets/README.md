@@ -1,16 +1,16 @@
-# Auto-MPG dataset
+# Jeu de données Auto-MPG 
 
-Execute the command
+Exécutez la commande
 
   - `pixi run python fetch-dataset.py`
 
-    to download the original dataset, check it, clean it and save it in the
-    Parquet format.
+    pour télécharger le jeu de données original, le vérifier, le nettoyer
+    puis le sauvegarder au format Parquet.
 
   - `pixi run marimo run fetch-dataset.py`
 
-    to get all these steps explained.
+    pour avoir l'explication de toutes ces étapes.
 
   - `pixi run marimo edit fetch-dataset.py`
 
-    to inspect or edit the implementation of this process.
+    pour inspecter ou éditer la mise en oeuvre de ce processus.
