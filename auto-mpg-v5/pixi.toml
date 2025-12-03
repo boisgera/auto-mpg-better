@@ -12,6 +12,7 @@ rm -rf images/*.png;
 rm -rf notebook.ipynb;
 rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/auto-mpg.parquet;
+rm -rf bibliography/references.bib;
 rm -rf models/results.json;
 rm -rf models/lp100.onnx;
 rm -rf **/__pycache__;

@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
 channels = ["conda-forge"]
 name = "auto-mpg-better"
@@ -12,13 +12,19 @@ rm -rf images/*.png;
 rm -rf notebook.ipynb;
 rm -rf datasets/auto-mpg.csv;
 rm -rf datasets/auto-mpg.parquet;
+rm -rf bibliography/references.bib;
 rm -rf **/__pycache__;
 rm -rf .ipynb_checkpoints;
 """
+[tasks.bibliography]
+cmd = "pandoc references.json -f csljson -t bibtex -o references.bib"
+inputs = ["bibliography/references.json"]
+outputs = ["bibliography/references.bib"]
+cwd = "bibliography"
 
 [tasks.fetch]
 cmd = "python fetch-dataset.py"
-inputs = ["datasets/fetch.py", "references.json"]
+inputs = ["datasets/fetch.py", "bibliography/references.json"]
 outputs = ["datasets/auto-mpg.csv", "datasets/auto-mpg.parquet"]
 cwd = "datasets"
 
@@ -33,7 +39,7 @@ cmd = """\
 pandoc 
 --citeproc 
 --metadata link-citations=true
---bibliography=references.json
+--bibliography=bibliography/references.json
 --pdf-engine=tectonic 
 -o article.pdf 
 article.md
@@ -47,11 +53,11 @@ cmd = """\
 pandoc 
 --standalone 
 --citeproc 
---bibliography=references.json
+--bibliography=bibliography/references.json
 -o article.html 
 article.md
 """
-inputs = ["article.md", "references.json", "images/error.png", "images/prediction.png"]
+inputs = ["article.md", "bibliography/references.json", "images/error.png", "images/prediction.png"]
 outputs = ["article.pdf"]
 depends-on = ["notebook"]
 

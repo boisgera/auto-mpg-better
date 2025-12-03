@@ -127,8 +127,9 @@ def _(DATA_URL, pathlib, requests):
 def _(MD5_SUM, hashlib):
     with open("auto-mpg.csv", "rb") as _file:
         checksum = hashlib.md5(_file.read()).hexdigest()
-    print(f"Checksum: {'✅' if checksum == MD5_SUM else '❌'}")
-    return (checksum,)
+    status = checksum == MD5_SUM
+    print(f"Checksum: {'✅' if status else '❌'}")
+    return checksum, status
 
 
 @app.cell(hide_code=True)
@@ -138,7 +139,9 @@ def _(mo):
 
 
 @app.cell
-def _(pd):
+def _(pd, status):
+    status 
+
     df = pd.read_csv("auto-mpg.csv")
     df
     return (df,)
@@ -296,12 +299,12 @@ def _(df_3):
     # ⚠️ These changes would be lost if df_4 was exported as csv ... but not parquet! 🥳
     df_4 = df_3.copy()
     df_4["origin"] = df_3["origin"].astype("category")
-    df_4["weight"] = df_4["weight"].astype(float)
+    df_4["weight"] = df_3["weight"].astype(float)
     df_4
     return (df_4,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""We fix both issues.""")
     return

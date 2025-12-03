@@ -1,8 +1,8 @@
-# Jeu de données Auto-MPG 
+# auto-mpg – Jeu de données 
 
 Exécutez la commande
 
-  - `pixi run python fetch-dataset.py`
+  - `pixi run python fetch-dataset.py` (ou `pixi run fetch` dans la racine du projet)
 
     pour télécharger le jeu de données original, le vérifier, le nettoyer
     puis le sauvegarder au format Parquet.

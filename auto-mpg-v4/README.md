@@ -1,4 +1,4 @@
-# auto-mpg v4 –⁠ Jeux de données
+# auto-mpg v4 –⁠ Bibliographie et jeu de données
 
 Le projet initial contenait un fichier de bibliographie `references.bib`
 au format BibTeX
@@ -61,9 +61,13 @@ données et l'ajouter dans les attributs personnalisés de notre bibliographie.
 ]
 ```
 
+On en profite pour ranger ce fichier dans un sous-dossier dédié `bibliography`
+et de le compléter par une tâche `bibliography` qui génère un format BibTeX 
+associé (si nécessaire !).
+
 ## Gestion des données
 
-Cf. [la section dédiée](datasets)
+Cf. [la section dédiée](datasets).
 
 
 
