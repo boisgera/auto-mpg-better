@@ -1,3 +1,6 @@
+# Python
+**/__pycache__
+
 # Pixi
 .pixi
 
@@ -9,6 +12,9 @@ notebook.ipynb
 article.md
 article.pdf
 article.html
+
+# Marimo
+**/__marimo__
 
 # Images
 images/*.png
