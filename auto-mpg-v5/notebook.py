@@ -251,7 +251,7 @@ def _(TensorProto, helper, intercept, np, onnx, slope):
 def _(mo):
     mo.md(
         r"""
-        Let's demonstrate how to use this saved OONNX model with the ONNX runtime.
+        Let's demonstrate how to use this saved ONNX model with the ONNX runtime.
 
         First we create a callable model instance `onnx_lp100`:
         """

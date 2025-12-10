@@ -149,12 +149,22 @@ def _(pd, status):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""
-        ## NA Values
+    mo.md(r"""## NA Values""")
+    return
 
-        There are a few not-available values in the data. We remove the corresponding 4 rows.
-        """
+
+@app.cell(hide_code=True)
+def _(df):
+    na_count = df.isna().any(axis=1).sum()
+    return (na_count,)
+
+
+@app.cell(hide_code=True)
+def _(mo, na_count):
+    mo.md(
+    f"""
+    There are a few not-available values in the data. We remove the corresponding {na_count} rows.
+    """
     )
     return
 
