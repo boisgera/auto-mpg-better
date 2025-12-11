@@ -23,7 +23,7 @@ Nous considérerons les étapes suivantes :
 
 ## Technologies
 
-Légende:  
+**Légende :**
 
  - 🏛️ : la solution classique, "ennuyeuse" mais éprouvée,
 

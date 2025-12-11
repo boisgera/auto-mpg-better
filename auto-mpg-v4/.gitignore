@@ -8,6 +8,9 @@ notebook.ipynb
 # Python
 **/__pycache__
 
+# Marimo
+**/__marimo__
+
 # Article
 article.pdf
 article.html
