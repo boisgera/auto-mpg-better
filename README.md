@@ -49,7 +49,7 @@ Nous considérerons les étapes suivantes :
 
 - [Codeberg](https://codeberg.org/).
 
-### Gestionnaires de packages
+### Gestionnaires de paquetages
 
 - 🔥 [pixi](https://pixi.sh/)
 
