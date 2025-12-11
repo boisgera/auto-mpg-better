@@ -83,9 +83,7 @@ Nous considérerons les étapes suivantes :
 ### Documents
 
 - 🏛️ [LaTeX](https://www.latex-project.org/), 
-  "A document preparation system".
-
-  "Moteurs" (La)TeX :
+  "A document preparation system". "Moteurs" de compilation (La)TeX :
 
     - 🏛️ [pdfTeX](https://en.wikipedia.org/wiki/PdfTeX)
 
