@@ -76,7 +76,7 @@ Nous considérerons les étapes suivantes :
 
 - 🏛️ [Make](https://en.wikipedia.org/wiki/Make_(software)), l'original.
 
-- [Task](https://taskfile.dev/), "The modern task runner".
+- 👀 [Task](https://taskfile.dev/), "The modern task runner".
 
 - [Just](https://just.systems/), "Just a command runner".
 
