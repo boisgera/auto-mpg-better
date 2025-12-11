@@ -76,14 +76,14 @@ Nous considérerons les étapes suivantes :
 
 - 🏛️ [Make](https://en.wikipedia.org/wiki/Make_(software)), l'original.
 
-- 👀 [Task](https://taskfile.dev/), "The modern task runner".
+- 👀 [Task](https://taskfile.dev/), "the modern task runner".
 
-- [Just](https://just.systems/), "Just a command runner".
+- [Just](https://just.systems/), "just a command runner".
 
 ### Documents
 
 - 🏛️ [LaTeX](https://www.latex-project.org/), 
-  "A document preparation system". "Moteurs" de compilation (La)TeX :
+  "a document preparation system". "Moteurs" de compilation (La)TeX :
 
     - 🏛️ [pdfTeX](https://en.wikipedia.org/wiki/PdfTeX)
 
