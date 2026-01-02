@@ -71,7 +71,7 @@ Nous considérerons les étapes suivantes :
 
 - 🔥 [pixi tasks](https://pixi.sh/dev/workspace/advanced_tasks/), intégré à pixi.
 
-- [taskipy](https://github.com/taskipy/taskipy) 
+- [taskipy](https://github.com/taskipy/taskipy) ou [poethepoet](https://poethepoet.natn.io/index.html)
 (pour Python, en complément d'uv par exemple !)
 
 - 🏛️ [Make](https://en.wikipedia.org/wiki/Make_(software)), l'original.
